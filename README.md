@@ -6,8 +6,7 @@ Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTic
 
 Features
 + All Premium features available
-+ Disable Update
-+ Version 3.9.1.0
++ Version 3.9.1.2
 
 ## How I made it
 
