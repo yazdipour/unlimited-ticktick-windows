@@ -1,12 +1,12 @@
 # Premium TickTick Windows Client
 
+All Premium features UNLOCKED.
+
+[Download Here](https://github.com/yazdipour/cracked-ticktick-windows/releases)
+
 ## How to use? 
 
 Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTick`)
-
-Features
-+ All Premium features available
-+ Version 3.9.1.2
 
 ## How I made it
 
