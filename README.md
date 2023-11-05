@@ -10,4 +10,38 @@ Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTic
 
 ## How I made it
 
-Simply use dnspy and replace these: `ticktick_WPF.Models.UserModel.proEndDate=>new DateTime?(new DateTime(2030, 12, 25));` and `pro=>true;`
+- Use dnSpy
+- Update these:
+
+Legacy way:
+
+```
+// in ticktick_WPF.Models.UserModel
+proEndDate=>new DateTime?(new DateTime(2030, 12, 25));
+pro=>true;
+```
+
+New way:
+
+```c#
+// in ticktick_WPF.Resource.LocalSettings
+
+public bool IsPro
+{
+  get
+  {
+    return this.SettingsModel.IsPro;
+  }
+  set
+  {
+    this.SettingsModel.IsPro = true; //force it to true
+    this.OnPropertyChanged("IsPro");
+  }
+}
+
+// ticktick_WPF.Dal.UserDao
+public static bool IsPro()
+{
+  return true; // force to true
+}
+```
