@@ -40,8 +40,8 @@ public bool IsPro
 }
 
 // ticktick_WPF.Dal.UserDao
-public static bool IsPro()
-{
-  return true; // force to true
-}
+//public static bool IsPro()
+//{
+//  return true; // force to true
+//}
 ```
