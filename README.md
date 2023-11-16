@@ -6,7 +6,10 @@ All Premium features UNLOCKED.
 
 ## How to use? 
 
-Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTick`)
+- Upgrade or Install the original TickTick (Chinese Ticktick/dida365 will not work).
+- Close the app from System tray completely.
+- Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTick`)
+- Enjoy!
 
 ## How I made it
 
