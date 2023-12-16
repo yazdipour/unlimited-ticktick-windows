@@ -8,7 +8,7 @@ All Premium features UNLOCKED.
 
 - Upgrade or Install the original TickTick (Chinese Ticktick/dida365 will not work).
 - Close the app from System tray completely.
-- Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTick`)
+- Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTick`). Have a backup from the original exe file just in case.
 - Enjoy!
 
 ## How I made it
@@ -16,7 +16,7 @@ All Premium features UNLOCKED.
 - Use dnSpy
 - Update these:
 
-Legacy way:
+Approach 1:
 
 ```
 // in ticktick_WPF.Models.UserModel
@@ -24,7 +24,7 @@ proEndDate=>new DateTime?(new DateTime(2030, 12, 25));
 pro=>true;
 ```
 
-New way:
+Approach 2:
 
 ```c#
 // in ticktick_WPF.Resource.LocalSettings
