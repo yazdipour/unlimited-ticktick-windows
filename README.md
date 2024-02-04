@@ -11,6 +11,17 @@ All Premium features UNLOCKED.
 - Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTick`). Have a backup from the original exe file just in case.
 - Enjoy!
 
+## Features
+
+- Unlimited Habits
+- Calendar view
+- ~Calendar Subscription~
+- Maintain third-party calendar subscription (If you subscribe your calendar via Paid Ticktick (maybe even with trials version), after opting-out you can still use it)
+- Widgets
+- Reminders
+- Themes
+- Smoother Focus experience 
+
 ## How I made it
 
 - Use dnSpy
