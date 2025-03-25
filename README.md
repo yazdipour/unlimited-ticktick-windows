@@ -20,7 +20,7 @@ All Premium features UNLOCKED.
 - Widgets
 - Reminders
 - Themes
-- Smoother Focus experience 
+- ⚠️ Some features might not work if it is restricted on server side
 
 ## How I made it
 
@@ -31,7 +31,7 @@ Approach 1:
 
 ```
 // in ticktick_WPF.Models.UserModel
-proEndDate=>new DateTime?(new DateTime(2030, 12, 25));
+proEndDate=>DateTime.MaxValue;
 pro=>true;
 ```
 
