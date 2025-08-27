@@ -1,28 +1,29 @@
 # Premium TickTick Windows Client
 
-All Premium features UNLOCKED.
+## For Ubuntu and probably Macos:
+> [!TIP]
+> If you want to learn how you can do the same for Electron version of the ticktick [follow instructions by the community.](https://github.com/yazdipour/unlimited-ticktick-windows/issues/12)
 
-[Download Here](https://github.com/yazdipour/cracked-ticktick-windows/releases)
+## For Windows:
 
-## How to use? 
+Final executable output: [Download Here](https://github.com/yazdipour/cracked-ticktick-windows/releases)
 
-- Upgrade or Install the original TickTick (Chinese Ticktick/dida365 will not work).
+### How to use? 
+
+- Upgrade or Install the original TickTick (Chinese Ticktick/dida365 will not work - personally never tried it).
 - Close the app from System tray completely.
 - Copy the exe file inside installed path (usually `C:\Program Files (x86)\TickTick`). Have a backup from the original exe file just in case.
-- Enjoy!
 
-## Features
+### Features
 
 - Unlimited Habits
 - Calendar view
-- ~Calendar Subscription~
-- Maintain third-party calendar subscription (If you subscribe your calendar via Paid Ticktick (maybe even with trials version), after opting-out you can still use it)
 - Widgets
 - Reminders
 - Themes
 - ⚠️ Some features might not work if it is restricted on server side
 
-## How I made it
+### To learn how its made
 
 - Use dnSpy
 - Update these:
