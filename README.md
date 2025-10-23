@@ -6,7 +6,7 @@
 
 ## For Windows:
 
-Final executable output: [Download Here](https://github.com/Dhanush908090/latest-unlimited-ticktick-windows/tree/latest-tick)
+Final executable output: [Download Here](https://github.com/Dhanush908090/latest-unlimited-ticktick-windows/releases/tag/latest-tick)
 
 ### How to use? 
 
