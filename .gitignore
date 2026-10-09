@@ -288,3 +288,7 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 .DS_Store
+
+# Downloaded TickTick installers (generated packages live in artifacts/)
+/tick_win_setup*.exe
+/work-*/

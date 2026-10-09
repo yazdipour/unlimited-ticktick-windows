@@ -4,12 +4,15 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <Nullable>enable</Nullable>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Do not compile C# files unpacked from installers or packaging tools. -->
+    <Compile Include="*.cs" />
     <PackageReference Include="dnlib" Version="4.5.0" />
   </ItemGroup>
 

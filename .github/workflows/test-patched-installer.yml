@@ -1,0 +1,52 @@
+name: Test Patched TickTick Installer
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      installer_url:
+        description: "Optional HTTPS installer URL override (otherwise repository variable or test default)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  installer-test:
+    name: Installer integration test
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Test installer pipeline
+        shell: pwsh
+        env:
+          TICKTICK_TEST_INSTALLER_URL: ${{ inputs.installer_url || vars.TICKTICK_TEST_INSTALLER_URL }}
+        run: ./scripts/Test-PatchedInstaller.ps1
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-test-results
+          path: |
+            artifacts/installer-test/*/test.log
+            artifacts/installer-test/*/TickTick Unlimited.exe
+          if-no-files-found: warn
+          retention-days: 7

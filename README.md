@@ -39,6 +39,49 @@ If you don't have a local .NET development environment set up, or just prefer to
 
 ---
 
+### Build a patched installer (GitHub Actions)
+
+01. Open **Actions > Build Patched TickTick Installer > Run workflow**.
+02. Enter the direct **HTTPS URL of the original Windows x64 installer EXE**, not the installed `TickTick.exe`. Use a trusted source.
+03. Download `TickTick-Patched-Installer` from the workflow artifacts, or `TickTick Unlimited.exe` from the new draft release.
+
+This separate workflow downloads the installer, extracts its payload without running setup, patches `TickTick.exe`, and builds a new installer. Before publishing, it extracts the result and checks every payload file against its SHA-256 hash. The existing executable-only workflow is unchanged.
+
+#### Installer integration test
+
+**Test Patched TickTick Installer** runs on pushes to every branch, on pull requests, and manually from Actions. It downloads the installer, runs the complete packaging pipeline, checks every repacked payload hash, and inspects the patched getters inside the final installer. It does not install or launch TickTick, and it does not create releases. Logs and the generated installer are uploaded as `installer-test-results` for 7 days.
+
+01. Default test input: `https://download.ticktick.app/download/win64/tick_win_setup_release_x64_8215.exe`.
+02. To change the URL for automatic runs without editing code, set repository variable **`TICKTICK_TEST_INSTALLER_URL`** under **Settings > Secrets and variables > Actions > Variables**. A manual run can override it with the optional `installer_url` input. Priority: manual input, repository variable, default in `scripts/Test-PatchedInstaller.ps1`. A broken download fails the test; there is no silent fallback.
+03. To block PR merges, configure the target branch ruleset or branch protection to **require pull requests** and the **`Installer integration test`** status check. Run the workflow once if the check is not selectable yet. Enable **Require branches to be up to date before merging** to require a passing check against the latest target branch. Workflow triggers alone do not enforce merge restrictions; repository settings must be configured separately. Fork PRs may require workflow approval under the repository's Actions policy.
+
+```powershell
+# Full integration test using the default URL (or TICKTICK_TEST_INSTALLER_URL).
+./scripts/Test-PatchedInstaller.ps1
+
+# Override the input for one local test run.
+./scripts/Test-PatchedInstaller.ps1 -InstallerUrl "https://example.com/ticktick-setup.exe"
+```
+
+#### Run locally (Windows, PowerShell 7 and .NET 8 SDK)
+
+```powershell
+# Use your downloaded installer; the original file is never modified.
+./scripts/Build-PatchedInstaller.ps1 -InstallerPath ./tick_win_setup_release_x64_8215.exe
+
+# Or download the installer from a direct URL.
+./scripts/Build-PatchedInstaller.ps1 -InstallerUrl "https://example.com/ticktick-setup.exe"
+```
+
+Output: `artifacts/installer/TickTick Unlimited.exe`. For subsequent runs, pass a fresh `-OutputDirectory`; existing installers are not overwritten. Working files stay in that directory for inspection and can be removed manually afterward. Repository-root `tick_win_setup*.exe` files and `artifacts/` are ignored by Git.
+
+Internet access is required even for local input: the script downloads checksum-pinned portable [Inno Unpacker](https://github.com/jrathlev/InnoUnpacker-Windows-GUI) and [Inno Setup 6.7.0](https://github.com/jrsoftware/issrc/releases/tag/is-6_7_0) tools. Neither tool is installed system-wide. The extractor supports Inno Setup through 6.7.3; unsupported formats or file-copy rules fail instead of producing a partial package. Duplicate file destinations are resolved in original installation order.
+
+> [!IMPORTANT]
+> This is a **new unsigned installer**, not the original signed setup. It targets Windows 10+ x64-compatible systems and installs per-user under `%LOCALAPPDATA%\Programs\TickTick Patched`, with its own uninstall entry and Start menu shortcut. Vendor setup code, protocol registration, startup tasks and prerequisite installation are not reproduced. Required app runtimes, including .NET Framework and WebView2, must already be available. It does not deliberately remove user data on uninstall, but the app still shares its normal data locations with an official installation. Close TickTick before installing or using this copy. App updates can replace the patch, and server-side restrictions remain.
+
+---
+
 ### Features
 
 - Calendar view

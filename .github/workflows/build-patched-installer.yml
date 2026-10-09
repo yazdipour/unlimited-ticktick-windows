@@ -1,0 +1,70 @@
+name: Build Patched TickTick Installer
+
+on:
+  workflow_dispatch:
+    inputs:
+      installer_url:
+        description: "Direct HTTPS URL to the original TickTick Windows x64 installer EXE"
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Download, unpack, patch, repack and verify
+        shell: pwsh
+        env:
+          INSTALLER_URL: ${{ inputs.installer_url }}
+        run: ./scripts/Build-PatchedInstaller.ps1 -InstallerUrl $env:INSTALLER_URL
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: TickTick-Patched-Installer
+          path: artifacts/installer/TickTick Unlimited.exe
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download verified installer
+        uses: actions/download-artifact@v4
+        with:
+          name: TickTick-Patched-Installer
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: patched-installer-${{ github.run_id }}-${{ github.run_attempt }}
+          name: Patched TickTick Installer (${{ github.run_number }})
+          target_commitish: ${{ github.sha }}
+          files: TickTick Unlimited.exe
+          fail_on_unmatched_files: true
+          draft: true
+          body: |
+            Unsigned, independently repackaged installer for Windows x64.
+            Installs per-user into a separate TickTick Patched directory.
+            Original setup hooks, prerequisite installation and protocol registration are not preserved.
+            Application updates can replace the patched executable.

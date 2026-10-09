@@ -2,14 +2,14 @@
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             Console.WriteLine("TTPatcher - TickTick License Patcher");
             Console.WriteLine("=====================================");
             
             // Parse command line arguments
             var inputPath = GetInputPath(args);
-            if (inputPath == null) return;
+            if (inputPath == null) return 1;
 
             // Generate output path
             var outputPath = GenerateOutputPath(inputPath);
@@ -27,6 +27,8 @@
             {
                 Console.WriteLine("❌ Patching failed!");
             }
+
+            return success ? 0 : 1;
         }
 
         private static string? GetInputPath(string[] args)
