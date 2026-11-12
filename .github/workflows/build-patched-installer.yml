@@ -1,10 +1,11 @@
-name: Build Patched TickTick Installer
+name: Patch TickTick Installer
 
 on:
   workflow_dispatch:
     inputs:
       installer_url:
         description: "Direct HTTPS URL to the original TickTick Windows x64 installer EXE"
+        default: https://ticktick.com/static/getApp/download?type=win64
         required: true
         type: string
 

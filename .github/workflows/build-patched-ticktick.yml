@@ -1,4 +1,4 @@
-name: Build and Release Patched TickTick
+name: Patch TickTick executable file
 
 on:
   workflow_dispatch:
